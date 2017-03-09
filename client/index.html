@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat client</title>
+        <script>
+            var wsUri = "ws://localhost:8080";
+            var webSocket = new WebSocket(wsUri);
+            
+            webSocket.onopen = function(event) {
+                console.log('Connected');
+            }
+            
+            webSocket.onmessage = function(event) {
+                console.log(event.data);
+            }
+            
+            webSocket.onerror = function(event) {
+                console.log('ERROR: ' + event.data);
+            }
+            
+            function send_echo() {
+                var messageToSend = document.getElementById('textId');
+                doSend(messageToSend.value);
+            }
+            
+            function doSend(message) {
+                webSocket.send(message);
+            }
+        </script>
+    </head>
+    
+    <body>
+        <h1>Websocket chat</h1>
+        <form action="">
+            <input type="button" onclick="send_echo()" value="Send request">
+            <input type="text" id="textId" name="message">
+        </form>
+    </body>
+</html>
